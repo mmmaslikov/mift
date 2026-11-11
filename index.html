@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Страница МО математики, информатики, физики и труда каталога «Точка ИИ»: готовые сайты, курсы, тренажёры и уроки со скриншотами, промты и сервисы, подготовка к ЕГЭ и ОГЭ.">
+<title>МО математики, информатики, физики и труда · Точка ИИ</title>
+
+<style>
+/* ============================================================================
+   СКРИНШОТЫ — загрузите эти PNG в папку images/ рядом с index.html
+   ----------------------------------------------------------------------------
+   images/shot-personal-1.png     личный сайт педагога — главный экран
+   images/shot-personal-2.png     личный сайт педагога — каталог разработок
+   images/shot-mc.png             мастер-класс «Создаём и публикуем сайт за 1 час»
+   images/shot-webdev.png         внеурочный курс «Веб-разработка»
+   images/shot-turtle.png         внеурочный курс «Turtle / Черепашка»
+   images/shot-unialgo.png        интерактивный урок: теория + тест + практика
+   images/shot-presentation.png   презентация для урока
+   images/shot-python-1.png       Python-тренажёр — каталог разделов
+   images/shot-python-2.png       Python-тренажёр — задача с автопроверкой
+   images/shot-game6.png          «Своя игра» для 6 класса
+   images/shot-ege.png            сайт подготовки к ЕГЭ
+   images/shot-oge.png            сайт подготовки к ОГЭ
+   images/shot-yandex-ege-1.png   Яндекс.ЕГЭ — главный экран тренажёра
+   images/shot-yandex-ege-2.png   Яндекс.ЕГЭ — объяснение ИИ-репетитора
+============================================================================ */
+
+:root{
+  --bg:#f2f2f2; --m2:#e6e6e6; --charcoal:#2f2d2c;
+  --surface:#ffffff; --surface-2:#fafafa;
+  --text:#1d1d1f; --muted:#6f6f6f;
+  --line:rgba(0,0,0,.10);
+  --accent:#0071e3; --hero-acc:#4da3ff;
+  --radius:20px; --shadow:0 12px 34px rgba(0,0,0,.10);
+  --nav-h:60px; --pad:clamp(16px,4vw,44px); --wrap:1200px; --col:960px; --zoom:1;
+}
+@media (min-width:1800px){:root{--zoom:1.25}}
+@media (min-width:2300px){:root{--zoom:1.5}}
+html{zoom:var(--zoom)}
+[data-theme="dark"]{
+  --bg:#161616; --m2:#1d1d1d; --charcoal:#232120;
+  --surface:#222222; --surface-2:#2a2a2a; --text:#f2f2f2; --muted:#9c9c9c;
+  --line:rgba(255,255,255,.12); --accent:#2997ff; --hero-acc:#2997ff;
+  --shadow:0 14px 40px rgba(0,0,0,.5);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:17px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+body.lb-open{overflow:hidden}
+img{max-width:100%;display:block}
+h1,h2,h3{letter-spacing:-.02em;line-height:1.15;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+strong{font-weight:700;color:var(--text)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad)}
+.j{text-align:justify;hyphens:auto}
+
+.panel,.mcard,.cons{--acc:var(--acc-l,#0071e3)}
+[data-theme="dark"] .panel,[data-theme="dark"] .mcard,[data-theme="dark"] .cons{--acc:var(--acc-d,#2997ff)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 18px;
+  border-radius:12px;border:1px solid color-mix(in srgb,var(--acc) 30%,transparent);
+  background:color-mix(in srgb,var(--acc) 13%,transparent);color:var(--acc);
+  font:inherit;font-weight:600;font-size:14.5px;cursor:pointer;text-decoration:none;transition:background .18s,transform .18s}
+.btn svg{width:16px;height:16px;flex:none}
+.btn:hover{background:color-mix(in srgb,var(--acc) 20%,transparent);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--muted);border-color:var(--line)}
+.btn.ghost:hover{color:var(--acc);border-color:var(--acc);background:transparent}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:980px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.22);font-size:13.5px;color:rgba(255,255,255,.88);font-weight:500}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;height:var(--nav-h);background:var(--charcoal);
+  border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-in{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad);height:var(--nav-h);display:flex;align-items:center;gap:12px}
+.back{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.85);text-decoration:none;
+  font-size:14px;font-weight:600;padding:8px 14px;border-radius:10px;min-height:40px;transition:all .18s}
+.back:hover{color:#fff;background:rgba(255,255,255,.1)}
+.back svg{width:16px;height:16px;flex:none}
+.nav-title{margin-left:auto;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.9);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav .icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.22);background:transparent;color:#fff;
+  display:grid;place-items:center;cursor:pointer;flex:none}
+.nav .icon-btn svg{width:18px;height:18px}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;background:var(--charcoal);color:#fff;padding:clamp(36px,6vw,72px) 0 clamp(32px,5vw,56px)}
+.hero-ico{position:absolute;right:-40px;bottom:-70px;width:clamp(200px,30vw,400px);color:var(--hero-acc);opacity:.14;pointer-events:none}
+.hero .wrap{position:relative;z-index:1}
+.kicker{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--hero-acc);margin-bottom:12px}
+.hero h1{font-size:clamp(28px,5vw,58px);font-weight:600;color:#fff;max-width:840px}
+.hero-sub{margin-top:12px;font-size:clamp(15px,1.7vw,19px);color:rgba(255,255,255,.68);max-width:700px;line-height:1.5}
+.hero-sub span{display:block}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+
+/* ВКЛАДКИ */
+.tabs-bar{position:sticky;top:var(--nav-h);z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:6px;
+  max-width:var(--wrap);margin:0 auto;padding:10px var(--pad)}
+.tab-btn{--tab:var(--acc-l);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  padding:10px 8px;border-radius:12px;border:1px solid var(--line);background:var(--surface);
+  color:var(--muted);font:inherit;font-size:12.5px;font-weight:600;line-height:1.25;text-align:center;
+  min-height:64px;cursor:pointer;transition:all .18s}
+[data-theme="dark"] .tab-btn{--tab:var(--acc-d)}
+.tab-btn .ti{font-size:19px;line-height:1}
+.tab-btn:hover{color:var(--tab);border-color:var(--tab)}
+.tab-btn.on{background:color-mix(in srgb,var(--tab) 12%,transparent);border-color:var(--tab);
+  color:var(--tab);box-shadow:inset 0 -3px 0 var(--tab)}
+@media (max-width:700px){
+  .tabs{grid-template-columns:repeat(3,1fr);gap:5px;padding:8px var(--pad)}
+  .tab-btn{min-height:56px;font-size:11.5px;padding:8px 4px}
+  .tab-btn .ti{font-size:17px}
+}
+@media (max-width:380px){.tabs{grid-template-columns:repeat(2,1fr)}}
+
+/* ПАНЕЛИ */
+.panel{display:none;padding:clamp(30px,5vw,60px) 0;scroll-margin-top:150px}
+.panel.on{display:block}
+.panel-intro{color:var(--muted);max-width:var(--col);font-size:clamp(15px,1.5vw,17.5px);line-height:1.65;
+  text-align:justify;hyphens:auto;
+  margin:0 auto clamp(20px,3vw,28px);padding:16px 20px;border-left:4px solid var(--acc);
+  background:color-mix(in srgb,var(--acc) 6%,var(--surface));border-radius:0 14px 14px 0}
+.mgrid{display:grid;gap:16px;grid-template-columns:1fr;max-width:var(--col);margin-inline:auto}
+.mcard{padding:clamp(18px,2.4vw,26px);display:flex;flex-direction:column;gap:14px;border-top:4px solid var(--acc)}
+.m-head{display:flex;align-items:center;gap:14px}
+.m-head .mi{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex:none;
+  background:color-mix(in srgb,var(--acc) 14%,transparent);color:var(--acc)}
+.m-head .mi svg{width:24px;height:24px}
+.m-head h3{font-size:18px}
+.mcard>p{color:var(--muted);font-size:15px}
+.m-links{display:flex;flex-wrap:wrap;gap:8px}
+.m-link{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:10px;border:1px solid var(--line);
+  background:var(--surface-2);color:var(--text);font-size:13.5px;font-weight:600;text-decoration:none;transition:all .18s;min-height:40px}
+.m-link:hover{border-color:var(--acc);color:var(--acc)}
+.m-link svg{width:14px;height:14px;flex:none}
+
+/* СКРИНШОТЫ */
+.shots{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:700px){.shots.shots-2{grid-template-columns:1fr 1fr}}
+.shot{margin:0;display:grid;gap:8px}
+.shot-frame{position:relative;display:block;width:100%;aspect-ratio:16/10;overflow:hidden;padding:0;
+  border-radius:14px;border:1px solid var(--line);background:var(--surface-2);cursor:zoom-in}
+.shot-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;
+  opacity:0;transition:opacity .5s,transform .5s}
+.shot-frame.is-loaded img{opacity:1}
+.shot-frame:hover img{transform:scale(1.03)}
+.shot-frame.is-missing img{display:none}
+.shot-ph{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  color:var(--muted);background:var(--surface-2);text-align:center;padding:12px}
+.shot-frame.is-missing .shot-ph{display:flex}
+.shot-ph svg{width:26px;height:26px;opacity:.6}
+.ph-file{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;opacity:.85;word-break:break-all}
+.shot-zoom{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+  background:rgba(0,0,0,.55);color:#fff;opacity:0;transition:opacity .2s;pointer-events:none}
+.shot-zoom svg{width:16px;height:16px}
+.shot-frame:hover .shot-zoom,.shot-frame:focus-visible .shot-zoom{opacity:1}
+.shot figcaption{font-size:13px;color:var(--muted);text-align:center}
+
+/* АЛГОРИТМЫ / СЛОВАРЬ */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:st}
+.steps li{position:relative;padding-left:44px;counter-increment:st;color:var(--muted);font-size:14.5px;line-height:1.55}
+.steps li::before{content:counter(st);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:9px;
+  background:color-mix(in srgb,var(--acc) 14%,transparent);color:var(--acc);font-weight:700;font-size:13px;display:grid;place-items:center}
+.gloss{margin:0;display:grid;gap:10px}
+.gloss div{padding:10px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.gloss dt{font-weight:700;font-size:14.5px}
+.gloss dd{margin:2px 0 0;color:var(--muted);font-size:14px;line-height:1.5}
+
+/* АККОРДЕОН ПРОМТА */
+.p-acc{border-top:1px dashed var(--line);padding-top:10px;margin-top:auto}
+.p-acc-btn{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;min-height:44px;
+  font:inherit;font-size:14px;font-weight:700;color:var(--acc);background:none;border:0;cursor:pointer;padding:0 2px}
+.p-acc-btn svg{width:18px;height:18px;transition:transform .25s;flex:none}
+.p-acc.open .p-acc-btn svg{transform:rotate(180deg)}
+.p-acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.p-acc.open .p-acc-body{max-height:1800px}
+.p-pre{margin:10px 0;padding:16px 18px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);
+  font-family:inherit;font-size:15px;line-height:1.65;white-space:pre-wrap;color:var(--text)}
+.p-actions{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:6px}
+
+/* КОНСТРУКТОР */
+.cons{padding:clamp(18px,2.4vw,26px);margin:0 auto 20px;max-width:var(--col);display:grid;gap:16px;border-top:4px solid var(--acc)}
+.cons-title{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700}
+.cons-title .ci2{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
+  background:color-mix(in srgb,var(--acc) 14%,transparent);color:var(--acc)}
+.cons-title .ci2 svg{width:22px;height:22px}
+.cons-grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media (min-width:700px){.cons-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1060px){.cons-grid{grid-template-columns:repeat(3,1fr)}}
+.field{display:grid;gap:6px}
+.field-wide{grid-column:1/-1}
+.field>label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.field-wide>label{text-transform:none;letter-spacing:0;font-size:13.5px;font-weight:600}
+.field input,.field select{font:inherit;font-size:15px;color:var(--text);background:var(--surface-2);
+  border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-height:46px;width:100%}
+.field input:focus,.field select:focus{outline:3px solid var(--accent);outline-offset:2px}
+.cons-checks{display:flex;flex-wrap:wrap;gap:6px}
+.cons-checks .chk{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:7px;border:1px solid var(--line);
+  background:var(--surface-2);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;
+  min-height:26px;line-height:1.2;text-transform:none;letter-spacing:0}
+.cons-checks .chk input{width:12px;height:12px;accent-color:var(--acc);margin:0;cursor:pointer;outline:none;flex:none}
+.cons-checks .chk input:focus,.cons-checks .chk input:focus-visible{outline:none;box-shadow:none}
+.cons-checks .chk:has(input:checked){border-color:color-mix(in srgb,var(--acc) 45%,var(--line));color:var(--acc)}
+.cons-out{margin:0;padding:16px 18px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);
+  font-family:inherit;font-size:15px;line-height:1.65;white-space:pre-wrap;color:var(--text)}
+.cons-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* FOOTER */
+.footer{background:var(--charcoal);color:#fff;padding:clamp(32px,5vw,56px) 0}
+.footer-in{display:grid;gap:16px;justify-items:center;text-align:center}
+.f-title{font-size:clamp(18px,2.2vw,24px);font-weight:700}
+.f-link{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);text-decoration:none;font-size:14px;font-weight:600;min-height:42px}
+.f-link:hover{color:#fff;border-color:#fff}
+.f-link svg{width:15px;height:15px;flex:none}
+.f-copy{color:rgba(255,255,255,.55);font-size:14px}
+
+/* ЛАЙТБОКС */
+.lb{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px}
+.lb[hidden]{display:none}
+.lb-back{position:absolute;inset:0;background:rgba(10,10,12,.84)}
+.lb-card{position:relative;z-index:1;display:grid;gap:10px;justify-items:center;width:auto;max-width:min(1200px,94vw)}
+.lb-frame{display:block;width:fit-content;max-width:100%;border-radius:14px;overflow:hidden;
+  background:#141416;border:1px solid rgba(255,255,255,.15)}
+.lb-frame img{display:block;width:auto;height:auto;max-width:min(1200px,94vw);max-height:78vh}
+.lb-frame .shot-ph{position:relative;display:flex;background:transparent;color:#bbb;
+  min-width:min(420px,80vw);min-height:220px}
+.lb-cap{color:#eee;font-size:14px;text-align:center;max-width:100%}
+.lb-nav{display:flex;align-items:center;justify-content:center;gap:10px}
+.lb-nav .icon-btn{width:42px;height:42px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);
+  color:#fff;display:grid;place-items:center;cursor:pointer}
+.lb-nav .icon-btn svg{width:18px;height:18px}
+.lb-count{color:#bbb;font-size:13px;min-width:52px;text-align:center}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);z-index:300;
+  padding:12px 22px;border-radius:12px;background:var(--charcoal);color:#fff;border:1px solid rgba(255,255,255,.18);
+  font-size:15px;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;max-width:calc(100vw - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+"use strict";
+const BACK_URL="https://mmmaslikov.github.io/point-ai";
+const QWEN_URL="https://chat.qwen.ai/";
+const IMG="images/";
+const MO={title:"Математика, информатика, физика и труд",
+  sub:["Методическое объединение ЧОУ «Точка будущего»","Страница каталога «Точка ИИ»"],
+  head:"Масликов Михаил",icon:"dev"};
+
+const PAL={
+  green:{l:"#248a3d",d:"#30d158"}, purple:{l:"#8944ab",d:"#bf5af2"},
+  blue:{l:"#0071e3",d:"#2997ff"},  orange:{l:"#c93400",d:"#ff9f0a"},
+  pink:{l:"#d30f45",d:"#ff375f"},  teal:{l:"#0071a4",d:"#64d2ff"},
+  indigo:{l:"#3634a3",d:"#5e5ce6"},red:{l:"#d70015",d:"#ff453a"},
+  gray:{l:"#6e6e73",d:"#98989d"}
+};
+const accVars=k=>{const p=PAL[k]||PAL.blue;return `--acc-l:${p.l};--acc-d:${p.d}`;};
+
+const TABS=[
+  {id:"start",emo:"🚦",label:"С чего начать",c:"green"},
+  {id:"prompts",emo:"🎯",label:"Промты и сервисы",c:"purple"},
+  {id:"sites",emo:"🌐",label:"Сайты и публикация",c:"blue"},
+  {id:"lessons",emo:"📚",label:"Курсы и уроки",c:"orange"},
+  {id:"trainers",emo:"🎮",label:"Тренажёры и игры",c:"pink"},
+  {id:"ege",emo:"🏆",label:"ЕГЭ и ОГЭ",c:"teal"}
+];
+
+const CONS={
+  subjects:["Математика","Информатика","Физика","Труд"],
+  levels:["базовый","продвинутый","ОВЗ","олимпиадный"],
+  formats:["задачи с автопроверкой","тест с вариантами ответов","тренажёр отработки навыка","виртуальная лабораторная работа","интерактивная симуляция","практическая работа","проектная задача","квиз для повторения"],
+  outputs:["интерактивная веб-страница","презентация","печатный рабочий лист (А4)","комплект карточек заданий","план урока"],
+  includes:["ответы и ключи","пошаговый разбор решения","критерии оценивания","подсказки для ученика","типичные ошибки и их разбор","шаблон самопроверки ученика"]
+};
+const OUTPUT_REQ={
+  "интерактивная веб-страница":"- реализуй одним HTML-файлом без внешних библиотек: адаптивность от 320px, крупные кнопки, автопроверка и экран результатов;\n",
+  "презентация":"- структурируй в 8–12 слайдов: для каждого слайда заголовок, 3–5 тезисов и идея иллюстрации; текст должен читаться с задней парты;\n",
+  "печатный рабочий лист (А4)":"- оформи для печати: шапка с полем для фамилии, задания по возрастанию сложности, место для ответа, ответы для учителя отдельной страницей;\n",
+  "комплект карточек заданий":"- пронумеруй карточки и отметь уровень каждой; на каждой карточке задание, ответ и критерий оценивания; добавь варианты использования на уроке;\n",
+  "план урока":"- распиши этапы с таймингом, деятельность учителя и учеников, формы контроля и дифференцированное домашнее задание на трёх уровнях;\n"
+};
+
+const CONTENT={
+  start:{intro:"Эта вкладка — **мягкий вход** в тему для тех, кто пока не работал с нейросетями. Здесь простыми словами объясняется, что такое **чат-бот**, как с ним разговаривать и какие **правила безопасности** важно соблюдать. Начните отсюда, если хотите сначала понять логику, а уже потом переходить к промтам, сайтам и тренажёрам.",
+    cards:[
+      {icon:"bot",c:"green",title:"Что такое чат-бот и как с ним разговаривать",
+        desc:"Чат-бот — собеседник, который понимает **обычный русский язык**. Никакого программирования: вы пишете просьбу, он выполняет.",
+        steps:["Откройте любой сервис из каталога на главной «Точки ИИ» — например, **Qwen**.",
+          "**Зарегистрируйтесь** по рабочей почте: это как регистрация на любом сайте.",
+          "Напишите просьбу **своими словами**: «Составь 5 задач по закону Ома для 8 класса».",
+          "Не то? Напишите «**сделай проще**» или «**добавь решения**» — бот переделает.",
+          "Понравившийся ответ **скопируйте себе в документ**."]},
+      {icon:"book",c:"teal",title:"Мини-словарь: пять слов, которые вам встретятся",
+        desc:"Все остальные «страшные» термины — **производные от этих пяти**.",
+        terms:[["Нейросеть (ИИ)","Программа, обученная на миллионах текстов: **отвечает, составляет, объясняет**."],
+          ["Чат-бот","Нейросеть в виде **диалога**: вы пишете — она отвечает и переделывает."],
+          ["Промт","Ваша **просьба** к боту. Качество ответа зависит от **точности просьбы**."],
+          ["Генерация","**Создание** ботом текста, изображения или кода по запросу."],
+          ["Сервис","**Сайт**, где живёт нейросеть. Вход по логину, как в почте."]]},
+      {icon:"sparkles",c:"orange",title:"Три правила хорошей просьбы",
+        desc:"Проверьте запрос по трём пунктам — и ответ станет **полезнее в разы**.",
+        steps:["Скажите, **кто вы и для кого**: «я учитель физики, нужно для 7 класса».",
+          "Скажите, **что именно сделать**: «составь 5 задач», «объясни в трёх предложениях».",
+          "Дайте **пример или ограничение**: «как задача №3 из учебника», «не больше половины страницы»."]},
+      {icon:"shield",c:"red",title:"Безопасность: три «нельзя»",
+        desc:"Простые правила, которые **защищают вас и учеников**.",
+        steps:["**Нельзя** загружать ФИО, оценки, фото и диагнозы учеников в публичные нейросети.",
+          "**Нельзя** публиковать работы и фото учеников без согласия родителей.",
+          "**Нельзя** сдавать результат бота без своей проверки: факты и цифры перепроверяете вы."],
+        links:[{label:"Раздел «Безопасность»",url:BACK_URL+"#safety"}]}
+    ]},
+  prompts:{intro:"Здесь собраны и **текстовые запросы** к нейросети, и **сервисы**, которые превращают эти запросы в готовый продукт. В конструкторе можно собрать промт под задачу, а ниже — готовые шаблоны для заданий, контрольных, объяснений и лабораторных. Отдельные карточки показывают, как делать презентации в **Gamma** и плакаты через **Qwen и Шедеврум**.",
+    cards:[
+      {icon:"route",c:"purple",title:"Как работать с готовым промтом: 5 шагов",
+        desc:"Короткая инструкция для тех, кто делает это **впервые**.",
+        steps:["Откройте карточку ниже и нажмите «**Показать промт**».",
+          "Нажмите «**Скопировать**» — текст попадёт в буфер обмена.",
+          "Откройте **Qwen** и вставьте текст в поле ввода.",
+          "Замените слова **в квадратных скобках** на свою тему и класс.",
+          "Прочитайте результат и попросите бота **исправить конкретные места**."]},
+      {icon:"target",c:"blue",title:"Задачи с автопроверкой и разбором",
+        desc:"Разноуровневые задачи: **ответ для автопроверки**, пошаговое объяснение, ошибки и подсказки.",
+        prompt:"Ты — опытный методист-предметник и разработчик учебных материалов с автопроверкой.\nСоставь 5 задач по теме [ТЕМА] для [КЛАСС] класса на трёх уровнях: базовый, продвинутый, олимпиадный.\n\nДля каждой задачи укажи:\n1) формулировку, понятную ученику этого возраста;\n2) ответ в формате для автопроверки (число или строка, без лишних слов);\n3) пошаговый разбор решения языком ученика;\n4) 2–3 типичные ошибки и как их заметить;\n5) подсказку, которая не раскрывает ответ.\n\nТребования: задачи не повторяют друг друга по типу решения; олимпиадный уровень решаем в рамках программы класса плюс смекалка; в конце добавь таблицу «номер — уровень — ответ»."},
+      {icon:"layers",c:"indigo",title:"Контрольная работа с вариантами",
+        desc:"Четыре **равнозначных варианта** с правдоподобными дистракторами и таблицей ключей.",
+        prompt:"Ты — учитель-предметник и составитель измерительных материалов. Составь контрольную по теме [ТЕМА] ([КЛАСС] класс): 4 равнозначных варианта по 8 заданий.\n\nСтруктура задания: формулировка, 4 варианта ответа (где уместно), правильный ответ, краткое объяснение. Дистракторы строй на типичных ошибках, а не на случайных числах.\n\nТребования: варианты равнозначны по сложности и закрывают одни подтемы; правильные ответы распределены по позициям 1–4 равномерно; формулировки без двойных отрицаний; после вариантов дай таблицу ключей, время выполнения и шкалу перевода балла в оценку."},
+      {icon:"heart",c:"pink",title:"Адаптация материала под уровни",
+        desc:"Один материал в **четырёх версиях**: ОВЗ, базовый, продвинутый, олимпиадный — с критериями и советами учителю.",
+        prompt:"Ты — методист-дефектолог и учитель-предметник. Адаптируй материал по теме [ТЕМА] ([КЛАСС] класс) под четыре уровня: ОВЗ, базовый, продвинутый, олимпиадный.\n\nДля каждого уровня: формулировка задания по объёму и сложности; опорные материалы (план, схема, словарь терминов, пример решённого задания); критерии оценивания, понятные ученику; совет учителю по сопровождению.\n\nТребования: версия ОВЗ — короткие предложения, одно действие в шаге, визуальные якоря; олимпиадная версия — исследовательская задача с открытым вопросом."},
+      {icon:"spark",c:"teal",title:"Виртуальная лабораторная работа",
+        desc:"Полная структура лабораторной с симулятором: теория, ход работы, **таблица данных**, вопросы и заметка по веб-реализации.",
+        prompt:"Ты — учитель физики/информатики и разработчик виртуальных лабораторных. Разработай лабораторную по теме [ТЕМА] для [КЛАСС] класса.\n\nСтруктура: цель и краткая теория (3–4 предложения); описание модели (что меняет ученик и что наблюдает); пошаговый ход работы с таблицей данных; 5 контрольных вопросов с ответами; шаблон вывода «я подтвердил/опроверг, что …».\n\nТребования: работа выполнима за 20–25 минут; параметры в реалистичных диапазонах; в конце заметка по реализации веб-страницей с ползунками и живым графиком."},
+      {icon:"eye",c:"green",title:"Объяснить сложную тему простыми словами",
+        desc:"**Четыре объяснения** одной темы — от одной фразы до предметного языка — плюс вопросы и «вопрос-ловушка».",
+        prompt:"Ты — учитель, который умеет объяснять сложное «на пальцах». Объясни тему [ТЕМА] для [КЛАСС] класса четырьмя способами:\n1) одним предложением без сложных терминов;\n2) через бытовую аналогию, знакомую подростку;\n3) пошагово от простого к сложному с разобранным примером;\n4) языком предмета: с формулой или схемой и терминами.\n\nДобавь 3 вопроса на проверку понимания с короткими ответами и один «вопрос-ловушку» с типовой ошибкой. Требования: аналогии не искажают суть; формулировки проверяемы по школьному учебнику."},
+      {icon:"layers",c:"orange",title:"Презентация к уроку за 10 минут · Gamma",
+        desc:"Структура и визуальный ряд из текстового описания: **черновик готов за минуты**, дальше — правки под свой класс.",
+        steps:["Выпишите план урока в **5–7 пунктов**: по тезису на слайд.",
+          "Откройте **Gamma** и выберите тип «Презентация».",
+          "Вставьте тезисы: «для школы, **строгий стиль**, со схемами».",
+          "Просмотрите слайды и **поправьте формулировки** под свой класс.",
+          "Выгрузите в **PDF** или поделитесь ссылкой."],
+        links:[{label:"Gamma",url:"https://gamma.app/"}]},
+      {icon:"cam",c:"pink",title:"Плакат и раздатка без дизайнера · Qwen + Шедеврум",
+        desc:"Сначала **структура и тексты в Qwen**, затем **иллюстрации в Шедевруме** — и плакат готов к печати.",
+        steps:["Сформулируйте, что на плакате: **формула, схема, правило**.",
+          "Попросите Qwen: «макет плаката **А3** по теме …: крупный заголовок, 4–5 блоков, подпись к схеме».",
+          "Попросите оформить **веб-страницей** — так плакат можно править и печатать.",
+          "Сгенерируйте иллюстрации в **Шедевруме** и вставьте их.",
+          "Проверьте **читаемость с расстояния** и печатайте."],
+        links:[{label:"Qwen",url:QWEN_URL},{label:"Шедеврум",url:"https://shedevrum.ai/"}]}
+    ]},
+  sites:{intro:"Эта вкладка о том, как превратить идею в работающий сайт и показать его коллегам или ученикам. Сначала — живой пример личного сайта педагога, затем мастер-класс «сайт за час» и понятная инструкция по публикации. Все карточки ниже — **готовые референсы**: открывайте, разбирайте устройство и используйте как **основу для собственной разработки** под свой предмет и класс.",
+    cards:[
+      {icon:"globe",c:"blue",title:"Личный сайт педагога — живой пример",
+        desc:"**Единая точка входа** ко всем материалам учителя: курсы, тренажёры, подготовка к экзаменам и проекты. Так может выглядеть и **ваш личный каталог** разработок.",
+        shots:[{file:"shot-personal-1.png",cap:"Главный экран личного сайта"},{file:"shot-personal-2.png",cap:"Каталог курсов и разработок"}],
+        links:[{label:"Открыть личный сайт",url:"https://mmmaslikov.github.io/"}]},
+      {icon:"sparkles",c:"purple",title:"Мастер-класс «Создаём и публикуем сайт за 1 час»",
+        desc:"Конвейер «**тема → промт → код → файл → проверка → правки**»: одностраничный сайт без умения программировать. Все материалы и шаблон промта — на странице МК.",
+        shots:[{file:"shot-mc.png",cap:"Страница мастер-класса с конвейером и шаблоном"}],
+        links:[{label:"Материалы мастер-класса",url:"https://mmmaslikov.github.io/tpg_mc2/"}],
+        steps:["Выберите **тему** будущего сайта.",
+          "Скопируйте **шаблон промта** со страницы МК и заполните поля.",
+          "Вставьте промт в **Qwen** и дождитесь кода.",
+          "Проверьте **предпросмотр**: кнопки и ответы работают.",
+          "Сохраните код в **index.html** и опубликуйте по инструкции ниже."]},
+      {icon:"git",c:"gray",title:"Публикация на GitHub Pages / GitVerse: 4 шага",
+        desc:"**Бесплатный хостинг**: файл с сайтом лежит в репозитории, ученики открывают его по обычной ссылке.",
+        steps:["**Зарегистрируйтесь** на github.com (или gitverse.ru) по рабочей почте.",
+          "Создайте репозиторий: имя **латиницей** (physics-8), тип **Public**.",
+          "Добавьте файл **index.html** с кодом из Qwen и сделайте **Commit**.",
+          "Включите Pages: **Settings → Pages → ветка main → Save**. Через 2–3 минуты сайт доступен по ссылке."],
+        links:[{label:"GitHub Pages",url:"https://pages.github.com/"},{label:"GitVerse",url:"https://gitverse.ru/"}]},
+      {icon:"dev",c:"indigo",title:"Промт: сайт по вашей теме",
+        desc:"Полное техзадание на одностраничный сайт: **состав блоков**, автопроверка, адаптивность и стиль.",
+        prompt:"Ты — senior frontend-разработчик образовательных приложений и методист. Создай одностраничный сайт по теме «[ТЕМА]» в формате [тест / тренажёр / урок-презентация / виртуальная лабораторная].\n\nСостав: стартовый экран с темой и кнопкой «Начать»; блок теории с примерами; практика 8–10 заданий с автопроверкой и обратной связью; экран результата (баллы, время, разбор ошибок); блок «Для учителя» с ключами.\n\nТехнические требования: один HTML-файл без внешних библиотек, адаптивность от 320px, спокойный светлый стиль, крупные кнопки, понятные сообщения об ошибках. Перед кодом напиши 3–5 предложений: как устроен сайт и что проверить в первую очередь."}
+    ]},
+  lessons:{intro:"Здесь собраны готовые курсы и уроки, которые можно использовать на занятии или внеурочной деятельности почти без подготовки. Каждый материал показан со скриншотом, чтобы было понятно, что увидит ученик. Это **примеры-референсы**: их можно взять за основу и **собрать свой вариант** под конкретный класс, а промты ниже помогут быстро сделать карточки заданий и план урока.",
+    cards:[
+      {icon:"dev",c:"orange",title:"Внеурочный курс «Веб-разработка»",
+        desc:"**Курс-симулятор профессии**: от первой страницы до собственного проекта с публичной защитой. ИИ — штатный инструмент, но сдавать нужно то, что понимаешь.",
+        shots:[{file:"shot-webdev.png",cap:"Каталог модулей курса «Веб-разработка»"}],
+        links:[{label:"Открыть курс",url:"https://mmmaslikov.github.io/webdev"}]},
+      {icon:"turtle",c:"green",title:"Внеурочный курс «Turtle / Черепашка»",
+        desc:"Черепашка рисует кодом фигуры и узоры **прямо в браузере**, без установки Python: теория, тренажёр и мини-проекты для 5–6 классов.",
+        shots:[{file:"shot-turtle.png",cap:"Урок курса с тренажёром черепашки"}],
+        links:[{label:"Открыть курс",url:"https://mmmaslikov.github.io/turtle"}]},
+      {icon:"book",c:"blue",title:"Интерактивный урок: теория + тест + практика",
+        desc:"Один сайт ведёт ученика по **полному циклу**: объяснение темы, проверочный тест и практическое задание с автопроверкой.",
+        shots:[{file:"shot-unialgo.png",cap:"Интерактивный урок: блоки теории, теста и практики"}],
+        links:[{label:"Открыть урок",url:"https://mmmaslikov.github.io/unialgo/"}]},
+      {icon:"layers",c:"pink",title:"Презентация для урока",
+        desc:"Готовая **веб-презентация** по теме урока: листается как слайды, открывается с любого устройства и не требует PowerPoint.",
+        shots:[{file:"shot-presentation.png",cap:"Слайд веб-презентации для урока"}],
+        links:[{label:"Открыть презентацию",url:"https://mmmaslikov.github.io/datamirrorpp/"}]},
+      {icon:"pen",c:"purple",title:"Промт: разноуровневые карточки заданий",
+        desc:"Комплект из **трёх уровней** с ключами и тремя сценариями использования на уроке.",
+        prompt:"Ты — методист-предметник. Составь комплект из 12 карточек по теме [ТЕМА] ([КЛАСС] класс): 4 базовых, 4 продвинутых, 4 творческих/прикладных.\n\nНа каждой карточке: номер и уровень, задание, место для решения, ответ, критерий оценивания. В конце: ключи для учителя и 3 варианта использования (индивидуально, в парах, станции). Требования: карточки одного уровня равнозначны по трудоёмкости; прикладные привязаны к жизненным сюжетам."},
+      {icon:"grad",c:"teal",title:"Промт: план урока по ФГОС",
+        desc:"План на **45 минут** с результатами, таймингом, оцениванием и дифференцированным домашним заданием.",
+        prompt:"Ты — методист, знакомый с требованиями ФГОС. Составь план урока по теме [ТЕМА] для [КЛАСС] класса (45 минут).\n\nСтруктура: цели и планируемые результаты (предметные, метапредметные, личностные); этапы с таймингом; деятельность учителя и учеников; формы работы; способы оценивания с критериями; дифференцированное домашнее задание на трёх уровнях. В конце: перечень материалов и два запасных сценария на случай сбоя техники. Требования: этапы логически связаны; контроль достижения цели не менее двух раз за урок."}
+    ]},
+  trainers:{intro:"Тренажёры и игры помогают отрабатывать навык и повторять тему в формате, где ученик **сразу видит результат**. Здесь есть примеры с автопроверкой, игровое обобщение и промт для создания собственного тренажёра.Materials ниже — **референсы**: посмотрите, как устроена механика, и **соберите свою игру** по любой теме, а сценарий квиза поможет сделать это за 15 минут.",
+    cards:[
+      {icon:"code",c:"indigo",title:"Python-тренажёр: 186 задач с проверкой",
+        desc:"Восемь разделов практики и шесть блоков теории: от переменных до функций. Ответ проверяется **в браузере**, прогресс разделов запоминается.",
+        shots:[{file:"shot-python-1.png",cap:"Каталог теории и практики тренажёра"},{file:"shot-python-2.png",cap:"Задача с автопроверкой ответа"}],
+        links:[{label:"Открыть тренажёр",url:"https://mmmaslikov.github.io/python"}]},
+      {icon:"target",c:"red",title:"«Своя игра» для обобщения темы",
+        desc:"**Командный формат** с табло, стоимостью вопросов и таймером: подойдёт для повторения в любом предмете, не только в информатике.",
+        shots:[{file:"shot-game6.png",cap:"Игровое поле «Своей игры» для 6 класса"}],
+        links:[{label:"Открыть «Свою игру»",url:"https://mmmaslikov.github.io/game6/"}]},
+      {icon:"spark",c:"pink",title:"Промт: тренажёр отработки навыка",
+        desc:"**Пятнадцать заданий** растущей сложности с подсказками, разбором ошибок и итоговым экраном.",
+        prompt:"Ты — разработчик образовательных игр и методист. Создай тренажёр по теме [ТЕМА] для [КЛАСС] класса: 15 заданий растущей сложности (5 разминочных, 7 основных, 3 бонусных).\n\nМеханика: автопроверка ответа; подсказка по запросу (не снижает балл); разбор ошибки после второй неверной попытки; полоса прогресса; финальный экран с оценкой и рекомендацией тем для повторения. Для каждого задания: формулировка, ответ, объяснение в одно предложение.\n\nТребования: один HTML-файл без внешних библиотек, адаптивность от 320px, крупные элементы управления, ответы не угадываются по паттерну."},
+      {icon:"route",c:"orange",title:"Квиз к уроку за 15 минут",
+        desc:"Быстрый сценарий: от идеи до **готового игрового повторения** на проекторе.",
+        steps:["Определите **цель**: повторение, проверка домашнего или подготовка к контрольной.",
+          "Попросите Qwen: «**10 вопросов** по теме …, по 4 варианта ответа, укажи правильные».",
+          "**Проверьте вопросы и ответы сами** — бот иногда ошибается.",
+          "Попросите оформить веб-страницей в стиле «**Своей игры**» или раздаточным листом.",
+          "На уроке выводите на **проектор** или отправьте ученикам ссылку."]}
+    ]},
+  ege:{intro:"Вкладка собирает всё для подготовки к государственной итоговой аттестации: собственные кабинеты ЕГЭ и ОГЭ, тренажёр Яндекса с ИИ-репетитором и инструменты для генерации вариантов. Кабинеты и сценарии ниже — **референсы**, от которых можно оттолкнуться и **сделать свою подготовку**, а анализ среза и промт траектории помогут опираться на реальные дефициты ученика.",
+    cards:[
+      {icon:"grad",c:"blue",title:"Кабинет подготовки к ЕГЭ",
+        desc:"Все **27 заданий** экзамена: теория, разборы и тренажёр по каждому номеру, шкала перевода баллов и стратегии тайминга.",
+        shots:[{file:"shot-ege.png",cap:"Каталог заданий кабинета ЕГЭ"}],
+        links:[{label:"Открыть кабинет ЕГЭ",url:"https://mmmaslikov.github.io/ege/"}]},
+      {icon:"grad",c:"teal",title:"Кабинет подготовки к ОГЭ",
+        desc:"**16 заданий** двух частей, включая практические за компьютером: презентации, документы, таблицы и программы.",
+        shots:[{file:"shot-oge.png",cap:"Каталог частей и заданий кабинета ОГЭ"}],
+        links:[{label:"Открыть кабинет ОГЭ",url:"https://mmmaslikov.github.io/oge/"}]},
+      {icon:"bot",c:"green",title:"Яндекс.ЕГЭ: тренажёр с ИИ-репетитором",
+        desc:"Платформа Яндекса для подготовки к ЕГЭ по информатике и математике: **ИИ-репетитор** объясняет решения и ведёт ученика по его дефицитам.",
+        shots:[{file:"shot-yandex-ege-1.png",cap:"Главный экран тренажёра Яндекс.ЕГЭ"},{file:"shot-yandex-ege-2.png",cap:"Объяснение решения ИИ-репетитором"}],
+        links:[{label:"education.yandex.ru/ege",url:"https://education.yandex.ru/ege/"}],
+        steps:["Откройте платформу и **выберите предмет**.",
+          "Покажите ученикам **подсказки и объяснение решения** у каждого задания.",
+          "Задавайте **конкретные номера** заданий домашней работой и смотрите статистику ошибок."]},
+      {icon:"layers",c:"indigo",title:"Промт: вариант ЕГЭ или ОГЭ по нужным номерам",
+        desc:"Вариант **в формате экзамена** с ключами, разборами и критериями.",
+        prompt:"Ты — эксперт предметной комиссии ЕГЭ/ОГЭ по информатике. Составь тренировочный вариант из заданий номеров [НОМЕРА] в формате экзамена.\n\nДля каждого задания: формулировка в экзаменационном стиле (с описанием рисунка или таблицы, где нужны), поле для ответа, правильный ответ, подробный разбор и критерии оценивания.\nВ конце: таблица ключей, паспорт сложности варианта и рекомендации по таймингу на 90 минут. Требования: числа и данные согласованы; решение каждого задания проверяемо вторым учителем без вопросов."},
+      {icon:"chart",c:"orange",title:"Анализ результатов среза без подвигов в Excel",
+        desc:"Таблица баллов превращается в **отчёт о дефицитах** и план корректировки.",
+        steps:["Сохраните таблицу результатов (**баллы по заданиям**).",
+          "**Уберите фамилии** — оставьте коды учеников (правило безопасности).",
+          "Вставьте таблицу в **DeepSeek**: «Выдели слабые темы и три типовые ошибки».",
+          "**Проверьте выводы** выборочно по работам.",
+          "Используйте в плане: какие темы повторить, кого включить в **группу поддержки**."],
+        links:[{label:"DeepSeek",url:"https://chat.deepseek.com/"}]},
+      {icon:"route",c:"purple",title:"Промт: персональная траектория подготовки",
+        desc:"**Восемь недель** маршрута по данным среза: темы, задания по номерам, контрольные точки.",
+        prompt:"Ты — тьютор и руководитель подготовки к ЕГЭ. На основе дефицитов [СПИСОК ТЕМ] и результатов среза [БАЛЛЫ] составь персональный маршрут на 8 недель.\n\nДля каждой недели: цель, темы, 5–7 заданий по номерам ЕГЭ, форма работы, контрольная точка и её критерии. Отдельно: «быстрые победы» (темы на 1–2 занятия) и зоны риска. В конце: шаблон еженедельного отчёта ученика и чек-поинт корректировки маршрута."}
+    ]}
+};
+
+const ICONS={
+  dev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>',
+  code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>',
+  target:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1"/></svg>',
+  layers:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 13 9 5 9-5"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.6 12 20l-7.5-7.4A5 5 0 1 1 12 6.3a5 5 0 1 1 7.5 6.3Z"/></svg>',
+  spark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg>',
+  sparkles:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>',
+  git:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>',
+  globe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a13.5 13.5 0 0 1 0 18 13.5 13.5 0 0 1 0-18z"/></svg>',
+  turtle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="6"/><path d="M12 7V4M6.5 9.5 4 8M17.5 9.5 20 8M8 18.5 6.6 21M16 18.5 17.4 21"/></svg>',
+  eye:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>',
+  grad:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/><path d="M22 9v6"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/></svg>',
+  route:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="19" r="2.6"/><circle cx="18" cy="5" r="2.6"/><path d="M8.6 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.4"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.4"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  bot:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4.5M9 13h.01M15 13h.01M9.5 16h5"/></svg>',
+  ext:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5"/></svg>',
+  left:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  right:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
+  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  close:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  zoom:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg>',
+  copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
+  sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.4"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M19.4 4.6l-1.7 1.7M6.3 17.7l-1.7 1.7"/></svg>',
+  moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 14.2A8.6 8.6 0 0 1 9.8 3.4a8.6 8.6 0 1 0 10.8 10.8z"/></svg>'
+};
+
+const state={tab:TABS[0].id,theme:"auto",lb:null};
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rich=s=>esc(s).replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");
+const plural=(n,a,b,c)=>{const m=n%100;if(m>=11&&m<=14)return c;switch(n%10){case 1:return a;case 2:case 3:case 4:return b;default:return c;}};
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),2400);}
+async function copyText(txt){
+  try{await navigator.clipboard.writeText(txt);toast("Промт скопирован");}
+  catch(e){const ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.left="-9999px";
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand("copy");toast("Промт скопирован");}catch(err){toast("Скопируйте текст вручную");}
+    document.body.removeChild(ta);}
+}
+function bindShots(root){
+  $$("img[data-file]",root).forEach(img=>{
+    const frame=img.closest(".shot-frame");
+    img.addEventListener("error",()=>frame&&frame.classList.add("is-missing"));
+    img.addEventListener("load",()=>frame&&frame.classList.add("is-loaded"));
+    if(img.complete&&img.naturalWidth>0)frame&&frame.classList.add("is-loaded");
+  });
+}
+
+function shotsBlock(shots){
+  if(!shots||!shots.length)return "";
+  const list=shots.map(s=>s.file).join("|");
+  return `<div class="shots ${shots.length>1?"shots-2":""}">${shots.map((s,i)=>`
+    <figure class="shot">
+      <button class="shot-frame" type="button" data-list="${esc(list)}" data-idx="${i}" aria-label="Открыть скриншот крупно: ${esc(s.cap||s.file)}">
+        <img data-file="${esc(s.file)}" src="${IMG}${esc(s.file)}" alt="${esc(s.cap||s.file)}" loading="lazy">
+        <span class="shot-ph">${ICONS.cam}<span class="ph-file">${IMG}${esc(s.file)}</span></span>
+        <span class="shot-zoom">${ICONS.zoom}</span>
+      </button>
+      ${s.cap?`<figcaption>${esc(s.cap)}</figcaption>`:""}
+    </figure>`).join("")}</div>`;
+}
+function accBlock(prompt){
+  if(!prompt)return "";
+  return `<div class="p-acc">
+    <button class="p-acc-btn" type="button" aria-expanded="false">Показать промт ${ICONS.down}</button>
+    <div class="p-acc-body"><pre class="p-pre">${esc(prompt)}</pre>
+      <div class="p-actions">
+        <button class="btn" type="button" data-copybtn>${ICONS.copy} Скопировать</button>
+        <a class="btn ghost" href="${QWEN_URL}" target="_blank" rel="noopener">${ICONS.bot} Открыть в Qwen</a>
+      </div></div></div>`;
+}
+function cardBlock(c){
+  const links=(c.links||[]).map(l=>`<a class="m-link" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ${ICONS.ext}</a>`).join("");
+  const steps=(c.steps||[]).length?`<ol class="steps">${c.steps.map(s=>`<li>${rich(s)}</li>`).join("")}</ol>`:"";
+  const gloss=(c.terms||[]).length?`<dl class="gloss">${c.terms.map(([t,d])=>`<div><dt>${esc(t)}</dt><dd>${rich(d)}</dd></div>`).join("")}</dl>`:"";
+  return `<article class="card mcard" style="${accVars(c.c)}">
+    <div class="m-head"><span class="mi">${ICONS[c.icon]||ICONS.spark}</span><h3>${esc(c.title)}</h3></div>
+    ${c.desc?`<p class="j">${rich(c.desc)}</p>`:""}
+    ${shotsBlock(c.shots)}
+    ${steps}${gloss}
+    ${links?`<div class="m-links">${links}</div>`:""}
+    ${accBlock(c.prompt)}
+  </article>`;
+}
+function consBlock(){
+  return `<div class="card cons">
+    <div class="cons-title"><span class="ci2">${ICONS.bot}</span>Собрать промт под свою задачу</div>
+    <div class="cons-grid">
+      <div class="field"><label for="c-subject">Предмет</label><select id="c-subject">${CONS.subjects.map(s=>`<option>${esc(s)}</option>`).join("")}</select></div>
+      <div class="field"><label for="c-topic">Тема</label><input id="c-topic" type="text" placeholder="Например: Квадратные уравнения"></div>
+      <div class="field"><label for="c-grade">Класс</label><input id="c-grade" type="text" placeholder="Например: 9"></div>
+      <div class="field"><label for="c-level">Уровень</label><select id="c-level">${CONS.levels.map(s=>`<option>${esc(s)}</option>`).join("")}</select></div>
+      <div class="field"><label for="c-format">Формат задания</label><select id="c-format">${CONS.formats.map(s=>`<option>${esc(s)}</option>`).join("")}</select></div>
+      <div class="field"><label for="c-output">Итоговый формат</label><select id="c-output">${CONS.outputs.map(s=>`<option>${esc(s)}</option>`).join("")}</select></div>
+      <div class="field field-wide"><label>Что обязательно включить</label>
+        <div class="cons-checks" id="cons-checks">${CONS.includes.map((x,i)=>`<label class="chk"><input type="checkbox" value="${esc(x)}"${i===0||i===1||i===4?" checked":""}> ${esc(x)}</label>`).join("")}</div></div>
+    </div>
+    <pre class="cons-out" id="cons-out"></pre>
+    <div class="cons-actions">
+      <button class="btn" type="button" id="cons-copy">${ICONS.copy} Скопировать промт</button>
+      <a class="btn ghost" href="${QWEN_URL}" target="_blank" rel="noopener">${ICONS.bot} Открыть в Qwen</a>
+    </div></div>`;
+}
+function renderApp(){
+  $("#app").innerHTML=`
+  <header class="nav"><div class="nav-in">
+    <a class="back" href="${BACK_URL}">${ICONS.left} Точка ИИ</a>
+    <span class="nav-title">МО математики, информатики, физики и труда</span>
+    <button class="icon-btn" id="theme-btn" type="button" aria-label="Переключить тему"></button>
+  </div></header>
+  <section class="hero"><div class="hero-ico">${ICONS[MO.icon]}</div><div class="wrap">
+    <span class="kicker">Страница объединения · Точка ИИ</span>
+    <h1>${esc(MO.title)}</h1>
+    <p class="hero-sub"><span>${esc(MO.sub[0])}</span><span>${esc(MO.sub[1])}</span></p>
+    <div class="hero-chips"><span class="chip">Куратор: ${esc(MO.head)}</span>
+      <span class="chip">${TABS.length} ${plural(TABS.length,"раздел","раздела","разделов")}</span>
+      <span class="chip">Сайты, курсы, тренажёры, промты</span></div>
+  </div></section>
+  <div class="tabs-bar"><div class="tabs" role="tablist" aria-label="Разделы страницы">
+    ${TABS.map(t=>`<button class="tab-btn${t.id===state.tab?" on":""}" style="${accVars(t.c)}" type="button" role="tab" aria-selected="${t.id===state.tab}" data-tab="${t.id}"><span class="ti">${t.emo}</span>${esc(t.label)}</button>`).join("")}
+  </div></div>
+  <main>${TABS.map(t=>{const c=CONTENT[t.id]||{intro:"",cards:[]};return `
+    <section class="panel${t.id===state.tab?" on":""}" id="panel-${t.id}" role="tabpanel" aria-label="${esc(t.label)}" style="${accVars(t.c)}">
+      <div class="wrap"><p class="panel-intro">${rich(c.intro)}</p>
+        ${t.id==="prompts"?consBlock():""}
+        <div class="mgrid">${c.cards.map(cardBlock).join("")}</div>
+      </div></section>`;}).join("")}</main>
+  <footer class="footer"><div class="wrap footer-in">
+    <div class="f-title">Материалы и инструменты · Точка ИИ</div>
+    <a class="f-link" href="${BACK_URL}">${ICONS.left} Вернуться в «Точку ИИ»</a>
+    <p class="f-copy">© 2026 ${esc(MO.title)} · ЧОУ «Точка будущего»</p>
+  </div></footer>
+  <div class="lb" id="lb" hidden>
+    <div class="lb-back" data-lb-close></div>
+    <figure class="lb-card">
+      <div class="lb-frame" id="lb-frame"></div>
+      <figcaption class="lb-cap" id="lb-cap"></figcaption>
+      <div class="lb-nav">
+        <button class="icon-btn" id="lb-prev" type="button" aria-label="Предыдущий">${ICONS.left}</button>
+        <span class="lb-count" id="lb-count"></span>
+        <button class="icon-btn" id="lb-next" type="button" aria-label="Следующий">${ICONS.right}</button>
+        <button class="icon-btn" id="lb-close" type="button" aria-label="Закрыть">${ICONS.close}</button>
+      </div>
+    </figure>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>`;
+  updateCons();
+  bindShots(document);
+}
+
+function consFields(){
+  return {subject:$("#c-subject")?.value||CONS.subjects[0],topic:$("#c-topic")?.value.trim()||"",
+    grade:$("#c-grade")?.value.trim()||"",level:$("#c-level")?.value||CONS.levels[0],
+    format:$("#c-format")?.value||CONS.formats[0],output:$("#c-output")?.value||CONS.outputs[0],
+    includes:$$("#cons-checks input:checked").map(i=>i.value)};
+}
+function buildCons(f){
+  const inc=f.includes.length?f.includes.map((x,i)=>`${i+1}. ${x};`).join("\n"):"1. ответы и ключи;";
+  return `Ты — опытный методист по предмету «${f.subject}» и эксперт по разработке учебных материалов.\nРазработай «${f.format}» по теме «${f.topic||"[ТЕМА]"}» для ${f.grade||"[КЛАСС]"} класса, уровень: ${f.level}.\n\nИтоговый формат материала: ${f.output}.\n\nОбязательное содержание:\n${inc}\n\nТребования:\n- формулировки понятны ученику этого возраста, без двусмысленностей;\n- ответы и критерии согласованы с формулировками и проверяемы вторым учителем;\n${OUTPUT_REQ[f.output]||""}- в конце добавь короткую методическую заметку: как использовать материал на уроке и как адаптировать под другой уровень.`;
+}
+function updateCons(){const o=$("#cons-out");if(o)o.textContent=buildCons(consFields());}
+
+function switchTab(id){
+  state.tab=id;
+  $$(".tab-btn").forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle("on",on);b.setAttribute("aria-selected",String(on));});
+  $$(".panel").forEach(p=>p.classList.toggle("on",p.id==="panel-"+id));
+  const panel=$("#panel-"+id),nav=$(".nav"),bar=$(".tabs-bar");
+  if(panel&&nav&&bar){
+    panel.style.scrollMarginTop=(nav.offsetHeight+bar.offsetHeight+10)+"px";
+    const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    panel.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+  }
+}
+
+function openLb(list,idx){state.lb={list,idx};$("#lb").hidden=false;document.body.classList.add("lb-open");drawLb();}
+function closeLb(){state.lb=null;$("#lb").hidden=true;document.body.classList.remove("lb-open");}
+function stepLb(d){if(!state.lb)return;const n=state.lb.list.length;state.lb.idx=(state.lb.idx+d+n)%n;drawLb();}
+function drawLb(){
+  const {list,idx}=state.lb;const file=list[idx];
+  const cap=(Object.values(CONTENT).flatMap(c=>c.cards).flatMap(c=>c.shots||[]).find(s=>s.file===file)||{}).cap||file;
+  const frame=$("#lb-frame");
+  frame.innerHTML=`<img src="${IMG}${esc(file)}" alt="${esc(cap)}"><span class="shot-ph" style="display:none">${ICONS.cam}<span class="ph-file">${IMG}${esc(file)}</span></span>`;
+  const img=frame.querySelector("img"),ph=frame.querySelector(".shot-ph");
+  img.addEventListener("error",()=>{img.style.display="none";ph.style.display="flex";});
+  img.addEventListener("load",()=>{img.style.display="block";ph.style.display="none";});
+  $("#lb-cap").textContent=cap;
+  $("#lb-count").textContent=`${idx+1} / ${list.length}`;
+  $("#lb-prev").style.visibility=list.length>1?"visible":"hidden";
+  $("#lb-next").style.visibility=list.length>1?"visible":"hidden";
+}
+
+function resolvedTheme(){return state.theme==="auto"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):state.theme;}
+function applyTheme(){document.documentElement.dataset.theme=resolvedTheme();
+  const b=$("#theme-btn");if(b){b.innerHTML=resolvedTheme()==="dark"?ICONS.sun:ICONS.moon;
+    b.setAttribute("aria-label",resolvedTheme()==="dark"?"Светлая тема":"Тёмная тема");}}
+function toggleTheme(){state.theme=resolvedTheme()==="dark"?"light":"dark";
+  try{localStorage.setItem("mift_theme_v1",state.theme);}catch(e){}applyTheme();}
+
+function bindHandlers(){
+  $("#theme-btn").addEventListener("click",toggleTheme);
+  document.addEventListener("click",e=>{
+    const tab=e.target.closest("[data-tab]");
+    if(tab){switchTab(tab.dataset.tab);return;}
+    const shot=e.target.closest(".shot-frame");
+    if(shot){openLb(shot.dataset.list.split("|"),+shot.dataset.idx);return;}
+    if(e.target.closest("[data-lb-close]")||e.target.closest("#lb-close")){closeLb();return;}
+    if(e.target.closest("#lb-prev")){stepLb(-1);return;}
+    if(e.target.closest("#lb-next")){stepLb(1);return;}
+    const acc=e.target.closest(".p-acc-btn");
+    if(acc){const box=acc.closest(".p-acc");const open=box.classList.toggle("open");acc.setAttribute("aria-expanded",String(open));return;}
+    const cp=e.target.closest("[data-copybtn]");
+    if(cp){const pre=cp.closest(".p-acc")?.querySelector(".p-pre");if(pre)copyText(pre.textContent);return;}
+    if(e.target.closest("#cons-copy")){copyText($("#cons-out").textContent);}
+  });
+  document.addEventListener("input",e=>{if(e.target.closest(".cons"))updateCons();});
+  document.addEventListener("change",e=>{if(e.target.closest(".cons"))updateCons();});
+  document.addEventListener("keydown",e=>{
+    if(state.lb){if(e.key==="Escape")closeLb();if(e.key==="ArrowLeft")stepLb(-1);if(e.key==="ArrowRight")stepLb(1);}
+  });
+}
+function init(){
+  try{const t=localStorage.getItem("mift_theme_v1");if(t==="light"||t==="dark")state.theme=t;}catch(e){}
+  renderApp();bindHandlers();applyTheme();
+}
+init();
+</script>
+</body>
+</html>
