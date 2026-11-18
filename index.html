@@ -9,7 +9,7 @@
 <style>
 /* ============================================================================
    ШАБЛОН СТРАНИЦЫ СФЕРЫ · всё «лицо» сферы задаётся одним объектом MO ниже:
-   title / full / sub / head / icon / color / colorDark / chips.
+   id / title / full / sub / head / icon / color / colorDark / chips.
    Шапка, hero, цвет акцента, <title> и meta подставляются из MO автоматически.
    Вкладки и их цвет — TABS + PAL; наполнение — CONTENT; конструктор — CONS.
    ----------------------------------------------------------------------------
@@ -28,9 +28,12 @@
   --line:rgba(0,0,0,.10);
   --accent:#0071e3; --hero-acc:#4da3ff;
   --radius:20px; --shadow:0 12px 34px rgba(0,0,0,.10);
-  --nav-h:60px; --pad:clamp(16px,4vw,44px); --wrap:1200px; --col:960px;
+  --nav-h:60px; --pad:clamp(16px,4vw,44px); --wrap:1200px; --col:960px; --zoom:1;
   --sb-track:#e6e6e6; --sb-thumb:#c7c7cc; --sb-hover:#a1a1a6;
 }
+/* Масштаб как на главной странице каталога: 100% выглядит как 125/150% */
+@media (min-width:1800px){:root{--zoom:1.25}}
+@media (min-width:2300px){:root{--zoom:1.5}}
 [data-theme="dark"]{
   --bg:#161616; --m2:#1d1d1d; --charcoal:#232120;
   --surface:#222222; --surface-2:#2a2a2a; --text:#f2f2f2; --muted:#9c9c9c;
@@ -39,7 +42,7 @@
   --sb-track:#1d1d1d; --sb-thumb:#3a3a3c; --sb-hover:#545456;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--sb-thumb) var(--sb-track)}
+html{zoom:var(--zoom);scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--sb-thumb) var(--sb-track)}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:var(--sb-track)}
 ::-webkit-scrollbar-thumb{background:var(--sb-thumb);border-radius:8px;border:2px solid var(--sb-track)}
@@ -224,7 +227,7 @@ a{color:var(--accent)}
   .f-copy .f-sep{display:none}
 }
 
-/* ЛАЙТБОКС */
+/* ЛАЙТБОКС · размеры vh/vw компенсированы под zoom, как на главной */
 .lb{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
   padding:16px;overscroll-behavior:contain}
 .lb[hidden]{display:none}
@@ -233,9 +236,9 @@ a{color:var(--accent)}
   display:flex;flex-direction:column;align-items:center;gap:10px}
 .lb-frame{display:grid;place-items:center;max-width:100%;min-width:min(280px,100%);min-height:150px;
   border-radius:14px;overflow:hidden;background:#141416;border:1px solid rgba(255,255,255,.15)}
-.lb-frame img{display:block;width:auto;height:auto;max-width:100%;max-height:70vh}
+.lb-frame img{display:block;width:auto;height:auto;max-width:100%;max-height:calc(70vh/var(--zoom))}
 .lb-frame .shot-ph{position:relative;display:flex;background:transparent;color:#bbb;
-  width:min(420px,78vw);min-height:200px}
+  width:min(420px,calc(78vw/var(--zoom)));min-height:200px}
 .lb-cap{color:#eee;font-size:14px;text-align:center;max-width:100%}
 .lb-nav{display:flex;align-items:center;justify-content:center;gap:10px}
 .lb-nav .icon-btn{width:42px;height:42px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);
@@ -244,12 +247,12 @@ a{color:var(--accent)}
 .lb-count{color:#bbb;font-size:13px;min-width:52px;text-align:center}
 @media (max-width:700px){
   .lb{padding:12px}
-  .lb-frame img{max-height:62vh}
+  .lb-frame img{max-height:calc(62vh/var(--zoom))}
 }
 
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);z-index:300;
   padding:12px 22px;border-radius:12px;background:var(--charcoal);color:#fff;border:1px solid rgba(255,255,255,.18);
-  font-size:15px;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;max-width:calc(100vw - 32px);text-align:center}
+  font-size:15px;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;max-width:calc(100vw/var(--zoom) - 32px);text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (prefers-reduced-motion:reduce){
