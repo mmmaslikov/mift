@@ -8,22 +8,17 @@
 
 <style>
 /* ============================================================================
-   СКРИНШОТЫ — загрузите эти PNG в папку images/ рядом с index.html
+   ШАБЛОН СТРАНИЦЫ СФЕРЫ · всё «лицо» сферы задаётся одним объектом MO ниже:
+   title / full / sub / head / icon / color / colorDark / chips.
+   Шапка, hero, цвет акцента, <title> и meta подставляются из MO автоматически.
+   Вкладки и их цвет — TABS + PAL; наполнение — CONTENT; конструктор — CONS.
    ----------------------------------------------------------------------------
-   images/shot-personal-1.png     личный сайт педагога — главный экран
-   images/shot-personal-2.png     личный сайт педагога — каталог разработок
-   images/shot-mc.png             мастер-класс «Создаём и публикуем сайт за 1 час»
-   images/shot-webdev.png         внеурочный курс «Веб-разработка»
-   images/shot-turtle.png         внеурочный курс «Turtle / Черепашка»
-   images/shot-unialgo.png        интерактивный урок: теория + тест + практика
-   images/shot-presentation.png   презентация для урока
-   images/shot-python-1.png       Python-тренажёр — каталог разделов
-   images/shot-python-2.png       Python-тренажёр — задача с автопроверкой
-   images/shot-game6.png          «Своя игра» для 6 класса
-   images/shot-ege.png            сайт подготовки к ЕГЭ
-   images/shot-oge.png            сайт подготовки к ОГЭ
-   images/shot-yandex-ege-1.png   Яндекс.ЕГЭ — главный экран тренажёра
-   images/shot-yandex-ege-2.png   Яндекс.ЕГЭ — объяснение ИИ-репетитора
+   СКРИНШОТЫ — кладите PNG в папку images/ рядом с index.html.
+   Имена для этой сферы (math): shot-personal-1/2, shot-mc, shot-webdev,
+   shot-turtle, shot-unialgo, shot-presentation, shot-python-1/2, shot-game6,
+   shot-ege, shot-oge, shot-yandex-ege-1/2.
+   Для другой сферы используйте свои имена вида shot-<сфера>-N.png и
+   пропишите их в CONTENT.shots; отсутствующий файл покажет заглушку с именем.
 ============================================================================ */
 
 :root{
@@ -33,12 +28,9 @@
   --line:rgba(0,0,0,.10);
   --accent:#0071e3; --hero-acc:#4da3ff;
   --radius:20px; --shadow:0 12px 34px rgba(0,0,0,.10);
-  --nav-h:60px; --pad:clamp(16px,4vw,44px); --wrap:1200px; --col:960px; --zoom:1;
+  --nav-h:60px; --pad:clamp(16px,4vw,44px); --wrap:1200px; --col:960px;
   --sb-track:#e6e6e6; --sb-thumb:#c7c7cc; --sb-hover:#a1a1a6;
 }
-@media (min-width:1800px){:root{--zoom:1.25}}
-@media (min-width:2300px){:root{--zoom:1.5}}
-html{zoom:var(--zoom)}
 [data-theme="dark"]{
   --bg:#161616; --m2:#1d1d1d; --charcoal:#232120;
   --surface:#222222; --surface-2:#2a2a2a; --text:#f2f2f2; --muted:#9c9c9c;
@@ -91,13 +83,14 @@ a{color:var(--accent)}
 .nav-title{margin-left:auto;font-size:13.5px;font-weight:700;color:rgba(255,255,255,.9);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nav .icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.22);background:transparent;color:#fff;
-  display:grid;place-items:center;cursor:pointer;flex:none; margin-left:auto}
+  display:grid;place-items:center;cursor:pointer;flex:none}
 .nav .icon-btn svg{width:18px;height:18px}
 @media (max-width:620px){.nav-title{display:none}}
 
 /* HERO */
 .hero{position:relative;overflow:hidden;background:var(--charcoal);color:#fff;padding:clamp(36px,6vw,72px) 0 clamp(32px,5vw,56px)}
 .hero-ico{position:absolute;right:-40px;bottom:-70px;width:clamp(200px,30vw,400px);color:var(--hero-acc);opacity:.14;pointer-events:none}
+.hero-ico svg{width:100%;height:auto;display:block}
 .hero .wrap{position:relative;z-index:1}
 .kicker{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--hero-acc);margin-bottom:12px}
 .hero h1{font-size:clamp(28px,5vw,58px);font-weight:600;color:#fff;max-width:840px}
@@ -207,10 +200,10 @@ a{color:var(--accent)}
   border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-height:46px;width:100%}
 .field input:focus,.field select:focus{outline:3px solid var(--accent);outline-offset:2px}
 .cons-checks{display:flex;flex-wrap:wrap;gap:6px}
-.cons-checks .chk{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:7px;border:1px solid var(--line);
-  background:var(--surface-2);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;
-  min-height:26px;line-height:1.2;text-transform:none;letter-spacing:0}
-.cons-checks .chk input{width:12px;height:12px;accent-color:var(--acc);margin:0;cursor:pointer;outline:none;flex:none}
+.cons-checks .chk{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;border:1px solid var(--line);
+  background:var(--surface-2);color:var(--muted);font-size:12.5px;font-weight:600;cursor:pointer;
+  min-height:32px;line-height:1.2;text-transform:none;letter-spacing:0}
+.cons-checks .chk input{width:14px;height:14px;accent-color:var(--acc);margin:0;cursor:pointer;outline:none;flex:none}
 .cons-checks .chk input:focus,.cons-checks .chk input:focus-visible{outline:none;box-shadow:none}
 .cons-checks .chk:has(input:checked){border-color:color-mix(in srgb,var(--acc) 45%,var(--line));color:var(--acc)}
 .cons-out{margin:0;padding:16px 18px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line);
@@ -231,7 +224,7 @@ a{color:var(--accent)}
   .f-copy .f-sep{display:none}
 }
 
-/* ЛАЙТБОКС — центрирован на любом экране, окно облегает изображение */
+/* ЛАЙТБОКС */
 .lb{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
   padding:16px;overscroll-behavior:contain}
 .lb[hidden]{display:none}
@@ -258,6 +251,11 @@ a{color:var(--accent)}
   padding:12px 22px;border-radius:12px;background:var(--charcoal);color:#fff;border:1px solid rgba(255,255,255,.18);
   font-size:15px;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;max-width:calc(100vw - 32px);text-align:center}
 .toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
 </style>
 </head>
 <body>
@@ -268,9 +266,19 @@ a{color:var(--accent)}
 const BACK_URL="https://mmmaslikov.github.io/point-ai";
 const QWEN_URL="https://chat.qwen.ai/";
 const IMG="images/";
-const MO={title:"Математика, информатика, физика и труд",
+
+/* ====== ЛИЦО СФЕРЫ: меняйте только этот объект под своё МО ====== */
+const MO={
+  id:"math",
+  title:"Математика, информатика, физика и труд",
+  full:"МО математики, информатики, физики и труда",
   sub:["Методическое объединение ЧОУ «Точка будущего»","Страница каталога «Точка ИИ»"],
-  head:"Масликов Михаил",icon:"dev"};
+  head:"Масликов Михаил",
+  icon:"dev",
+  color:"#0a84ff",
+  colorDark:"#2997ff",
+  chips:"Сайты, курсы, тренажёры, промты"
+};
 
 /* Один цвет на вкладку: все карточки внутри наследуют его */
 const PAL={
@@ -500,6 +508,9 @@ const ICONS={
   book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
   shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
   bot:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="8" width="16" height="11" rx="3"/><path d="M12 8V4.5M9 13h.01M15 13h.01M9.5 16h5"/></svg>',
+  scale:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M8 20h8M12 6l6 2-6-2-6 2 6-2z"/><path d="M6 8l-3 6a3.2 3.2 0 0 0 6 0zM18 8l-3 6a3.2 3.2 0 0 0 6 0z"/></svg>',
+  brain:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/></svg>',
+  briefcase:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
   ext:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5"/></svg>',
   left:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   right:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
@@ -596,22 +607,22 @@ function renderApp(){
   $("#app").innerHTML=`
   <header class="nav"><div class="nav-in">
     <a class="back" href="${BACK_URL}">${ICONS.left} Точка ИИ</a>
-    <span class="nav-title">МО математики, информатики, физики и труда</span>
+    <span class="nav-title">${esc(MO.full||MO.title)}</span>
     <button class="icon-btn" id="theme-btn" type="button" aria-label="Переключить тему"></button>
   </div></header>
-  <section class="hero"><div class="hero-ico">${ICONS[MO.icon]}</div><div class="wrap">
+  <section class="hero"><div class="hero-ico">${ICONS[MO.icon]||ICONS.spark}</div><div class="wrap">
     <span class="kicker">Страница объединения · Точка ИИ</span>
     <h1>${esc(MO.title)}</h1>
     <p class="hero-sub"><span>${esc(MO.sub[0])}</span><span>${esc(MO.sub[1])}</span></p>
     <div class="hero-chips"><span class="chip">Куратор: ${esc(MO.head)}</span>
       <span class="chip">${TABS.length} ${plural(TABS.length,"раздел","раздела","разделов")}</span>
-      <span class="chip">Сайты, курсы, тренажёры, промты</span></div>
+      <span class="chip">${esc(MO.chips||"Промты, алгоритмы, сервисы")}</span></div>
   </div></section>
   <div class="tabs-bar"><div class="tabs" role="tablist" aria-label="Разделы страницы">
-    ${TABS.map(t=>`<button class="tab-btn${t.id===state.tab?" on":""}" style="${accVars(t.c)}" type="button" role="tab" aria-selected="${t.id===state.tab}" data-tab="${t.id}"><span class="ti">${t.emo}</span>${esc(t.label)}</button>`).join("")}
+    ${TABS.map(t=>`<button class="tab-btn${t.id===state.tab?" on":""}" style="${accVars(t.c)}" type="button" role="tab" id="tab-${t.id}" aria-controls="panel-${t.id}" aria-selected="${t.id===state.tab}" data-tab="${t.id}"><span class="ti">${t.emo}</span>${esc(t.label)}</button>`).join("")}
   </div></div>
   <main>${TABS.map(t=>{const c=CONTENT[t.id]||{intro:"",cards:[]};return `
-    <section class="panel${t.id===state.tab?" on":""}" id="panel-${t.id}" role="tabpanel" aria-label="${esc(t.label)}" style="${accVars(t.c)}">
+    <section class="panel${t.id===state.tab?" on":""}" id="panel-${t.id}" role="tabpanel" aria-labelledby="tab-${t.id}" style="${accVars(t.c)}">
       <div class="wrap"><p class="panel-intro">${esc(c.intro)}</p>
         ${t.id==="prompts"?consBlock():""}
         <div class="mgrid">${c.cards.map(cardBlock).join("")}</div>
@@ -650,10 +661,12 @@ function buildCons(f){
 }
 function updateCons(){const o=$("#cons-out");if(o)o.textContent=buildCons(consFields());}
 
-function switchTab(id){
+function switchTab(id,updateHash=true){
+  if(!TABS.some(t=>t.id===id))return;
   state.tab=id;
   $$(".tab-btn").forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle("on",on);b.setAttribute("aria-selected",String(on));});
   $$(".panel").forEach(p=>p.classList.toggle("on",p.id==="panel-"+id));
+  if(updateHash){try{history.replaceState(null,"","#"+id);}catch(e){}}
   const panel=$("#panel-"+id),nav=$(".nav"),bar=$(".tabs-bar");
   if(panel&&nav&&bar){
     panel.style.scrollMarginTop=(nav.offsetHeight+bar.offsetHeight+10)+"px";
@@ -683,14 +696,19 @@ function drawLb(){
   img.addEventListener("load",()=>{img.style.display="block";ph.style.display="none";});
   $("#lb-cap").textContent=cap;
   $("#lb-count").textContent=`${idx+1} / ${list.length}`;
-  $("#lb-prev").style.visibility=list.length>1?"visible":"hidden";
-  $("#lb-next").style.visibility=list.length>1?"visible":"hidden";
+  const multi=list.length>1;
+  $("#lb-prev").style.display=multi?"":"none";
+  $("#lb-next").style.display=multi?"":"none";
 }
 
 function resolvedTheme(){return state.theme==="auto"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):state.theme;}
-function applyTheme(){document.documentElement.dataset.theme=resolvedTheme();
-  const b=$("#theme-btn");if(b){b.innerHTML=resolvedTheme()==="dark"?ICONS.sun:ICONS.moon;
-    b.setAttribute("aria-label",resolvedTheme()==="dark"?"Светлая тема":"Тёмная тема");}}
+function applyTheme(){
+  const dark=resolvedTheme()==="dark";
+  document.documentElement.dataset.theme=resolvedTheme();
+  document.documentElement.style.setProperty("--hero-acc",dark?(MO.colorDark||MO.color||"#2997ff"):(MO.color||"#4da3ff"));
+  const b=$("#theme-btn");if(b){b.innerHTML=dark?ICONS.sun:ICONS.moon;
+    b.setAttribute("aria-label",dark?"Светлая тема":"Тёмная тема");}
+}
 function toggleTheme(){state.theme=resolvedTheme()==="dark"?"light":"dark";
   try{localStorage.setItem("mift_theme_v1",state.theme);}catch(e){}applyTheme();}
 
@@ -718,19 +736,38 @@ function bindHandlers(){
       if(e.key==="ArrowLeft")stepLb(-1);
       if(e.key==="ArrowRight")stepLb(1);
       if(e.key==="Tab"){
-        const f=$$("#lb button").filter(b=>b.style.visibility!=="hidden");
+        const f=$$("#lb button").filter(b=>b.offsetParent!==null);
         if(f.length){
           const first=f[0],last=f[f.length-1];
           if(e.shiftKey&&document.activeElement===first){last.focus();e.preventDefault();}
           else if(!e.shiftKey&&document.activeElement===last){first.focus();e.preventDefault();}
         }
       }
+      return;
+    }
+    const tb=e.target.closest(".tab-btn");
+    if(tb&&["ArrowRight","ArrowLeft","Home","End"].includes(e.key)){
+      e.preventDefault();
+      const i=TABS.findIndex(t=>t.id===tb.dataset.tab);
+      let n=i;
+      if(e.key==="ArrowRight")n=(i+1)%TABS.length;
+      if(e.key==="ArrowLeft")n=(i-1+TABS.length)%TABS.length;
+      if(e.key==="Home")n=0;
+      if(e.key==="End")n=TABS.length-1;
+      const next=TABS[n];
+      switchTab(next.id);
+      $("#tab-"+next.id)?.focus({preventScroll:true});
     }
   });
 }
 function init(){
   try{const t=localStorage.getItem("mift_theme_v1");if(t==="light"||t==="dark")state.theme=t;}catch(e){}
   renderApp();bindHandlers();applyTheme();
+  document.title=(MO.full||MO.title)+" · Точка ИИ";
+  const md=document.querySelector('meta[name="description"]');
+  if(md)md.setAttribute("content",(MO.full||MO.title)+" — страница каталога «Точка ИИ»: "+(MO.chips||"промты, алгоритмы, сервисы")+".");
+  const h=location.hash.replace("#","");
+  if(TABS.some(t=>t.id===h))switchTab(h,false);
 }
 init();
 </script>
