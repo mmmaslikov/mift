@@ -8,20 +8,17 @@
 
 <style>
 /* ============================================================================
-   ШАБЛОН СТРАНИЦЫ СФЕРЫ · масштаб и палитра совпадают с главной «Точка ИИ»:
-   --wrap 1320, --pad clamp(20,4vw,48), --nav-h 64, --radius 24, --zoom 1/1.25/1.5,
-   фон #f2f2f2 / #161616, шапка color-mix(charcoal 88%) + blur, hero-acc #4da3ff/#2997ff.
-   «Лицо» сферы задаётся объектом MO (id/title/full/sub/head/icon/color/colorDark/chips);
-   вкладки и их цвет — TABS + PAL; наполнение — CONTENT; конструктор — CONS.
-   ----------------------------------------------------------------------------
-   СКРИНШОТЫ — кладите PNG в папку images/ рядом с index.html.
-   Имена для этой сферы (math): shot-personal-1/2, shot-mc, shot-webdev,
-   shot-turtle, shot-unialgo, shot-presentation, shot-python-1/2, shot-game6,
-   shot-ege, shot-oge, shot-yandex-ege-1/2.
-   Для другой сферы используйте свои имена вида shot-<сфера>-N.png и
-   пропишите их в CONTENT.shots; отсутствующий файл покажет заглушку с именем.
+   ШАБЛОН СТРАНИЦЫ СФЕРЫ КАТАЛОГА «ТОЧКА ИИ»
+   Меняйте под своё МО только данные в <script>: MO, TABS, CONTENT, CONS.
+   CSS и функции-движок не переписывайте.
+   MO: id, title, full, sub[2], head, icon(ключ ICONS), color, colorDark, chips.
+   TABS: id, emo, label, c(ключ PAL). CONTENT: intro + cards по id вкладки.
+   Карточка: icon, title, desc, steps[], terms[][], links[{label,url,same}],
+   prompt, shots[{file,cap}]. Скриншоты — PNG в папке images/ рядом с index.html;
+   отсутствующий файл показывает заглушку с именем.
 ============================================================================ */
 
+/* BASE */
 :root{
   --bg:#f2f2f2; --m2:#e6e6e6; --charcoal:#2f2d2c;
   --surface:#ffffff; --surface-2:#fafafa;
@@ -29,10 +26,9 @@
   --line:rgba(0,0,0,.10);
   --accent:#0071e3; --hero-acc:#4da3ff;
   --radius:24px; --shadow:0 12px 34px rgba(0,0,0,.10);
-  --nav-h:64px; --pad:clamp(20px,4vw,48px); --wrap:1320px; --col:1120px; --zoom:1;
+  --nav-h:64px; --pad:clamp(20px,4vw,48px); --wrap:1320px; --zoom:1;
   --sb-track:#e6e6e6; --sb-thumb:#c7c7cc; --sb-hover:#a1a1a6;
 }
-/* Масштаб как на главной странице каталога */
 @media (min-width:1800px){:root{--zoom:1.25}}
 @media (min-width:2300px){:root{--zoom:1.5}}
 [data-theme="dark"]{
@@ -60,10 +56,8 @@ a{color:var(--accent)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:8px}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad)}
 .j{text-align:justify;hyphens:auto}
-
 .panel,.mcard,.cons{--acc:var(--acc-l,#0071e3)}
 [data-theme="dark"] .panel,[data-theme="dark"] .mcard,[data-theme="dark"] .cons{--acc:var(--acc-d,#2997ff)}
-
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 26px;
   border-radius:980px;border:1px solid color-mix(in srgb,var(--acc) 30%,transparent);
   background:color-mix(in srgb,var(--acc) 13%,transparent);color:var(--acc);
@@ -77,7 +71,7 @@ a{color:var(--accent)}
   border:1px solid rgba(255,255,255,.22);font-size:14px;color:rgba(255,255,255,.88);font-weight:500}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
 
-/* NAV — тон и блюр как на главной */
+/* NAV */
 .nav{position:sticky;top:0;z-index:50;height:var(--nav-h);
   background:color-mix(in srgb,var(--charcoal) 88%,transparent);
   backdrop-filter:saturate(140%) blur(18px);-webkit-backdrop-filter:saturate(140%) blur(18px);
@@ -98,25 +92,27 @@ a{color:var(--accent)}
   .nav .icon-btn{margin-left:auto}
 }
 
-/* HERO — высота, типографика и左 линейка как на главной */
+/* HERO */
 .hero{position:relative;overflow:hidden;background:var(--charcoal);color:#fff;
-  min-height:calc((100vh - var(--nav-h))/var(--zoom));
-  min-height:calc((100svh - var(--nav-h))/var(--zoom));
-  display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(28px,4vw,64px) 0}
+  padding:clamp(36px,6vw,72px) 0 clamp(32px,5vw,56px)}
 .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(120% 90% at 78% 20%,rgba(255,255,255,.06),transparent 60%)}
-.hero-ico{position:absolute;right:-40px;bottom:-70px;width:clamp(200px,30vw,400px);color:var(--hero-acc);opacity:.14;pointer-events:none}
-.hero-ico svg{width:100%;height:auto;display:block}
-.hero .wrap{position:relative;z-index:1;width:100%}
+.hero .wrap{position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(16px,3vw,40px);align-items:center}
 .kicker{display:inline-block;font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--hero-acc);margin-bottom:12px}
 .hero-name{border-left:2px solid var(--hero-acc);padding-left:clamp(16px,2vw,26px)}
-.hero h1{font-size:clamp(34px,6.4vw,92px);font-weight:600;color:#fff;letter-spacing:-.03em;max-width:900px}
+.hero h1{font-size:clamp(30px,5vw,64px);font-weight:600;color:#fff;letter-spacing:-.03em;max-width:900px}
 .hero-sub{margin-top:10px;font-size:clamp(15px,1.6vw,20px);color:rgba(255,255,255,.66);letter-spacing:.02em;line-height:1.5}
 .hero-sub span{display:block}
 .hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.hero-ico{justify-self:end;width:clamp(110px,16vw,210px);aspect-ratio:1;border-radius:50%;
+  display:grid;place-items:center;padding:clamp(16px,2.6vw,32px);color:var(--hero-acc);
+  background:color-mix(in srgb,var(--hero-acc) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--hero-acc) 32%,transparent)}
+.hero-ico svg{width:100%;height:auto;display:block}
+@media (max-width:620px){.hero-ico{width:88px;padding:14px}}
 
-/* ВКЛАДКИ */
+/* TABS */
 .tabs-bar{position:sticky;top:var(--nav-h);z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
 .tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:6px;
   max-width:var(--wrap);margin:0 auto;padding:10px var(--pad)}
@@ -136,14 +132,14 @@ a{color:var(--accent)}
 }
 @media (max-width:380px){.tabs{grid-template-columns:repeat(2,1fr)}}
 
-/* ПАНЕЛИ */
-.panel{display:none;padding:clamp(52px,7vw,110px) 0;scroll-margin-top:150px}
+/* PANELS */
+.panel{display:none;padding:clamp(20px,3vw,36px) 0 clamp(44px,6vw,84px);scroll-margin-top:150px}
 .panel.on{display:block}
-.panel-intro{color:var(--muted);max-width:var(--col);font-size:clamp(16px,1.5vw,20px);line-height:1.65;
+.panel-intro{color:var(--muted);font-size:clamp(16px,1.5vw,20px);line-height:1.65;
   text-align:justify;hyphens:auto;
-  margin:0 auto clamp(26px,3vw,48px);padding:18px 22px;border-left:4px solid var(--acc);
+  margin:0 0 clamp(20px,3vw,32px);padding:18px 22px;border-left:4px solid var(--acc);
   background:color-mix(in srgb,var(--acc) 6%,var(--surface));border-radius:0 14px 14px 0}
-.mgrid{display:grid;gap:16px;grid-template-columns:1fr;max-width:var(--col);margin-inline:auto}
+.mgrid{display:grid;gap:16px;grid-template-columns:1fr}
 .mcard{padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;gap:14px;border-top:4px solid var(--acc)}
 .m-head{display:flex;align-items:center;gap:14px}
 .m-head .mi{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;flex:none;
@@ -157,7 +153,7 @@ a{color:var(--accent)}
 .m-link:hover{border-color:var(--acc);color:var(--acc)}
 .m-link svg{width:14px;height:14px;flex:none}
 
-/* СКРИНШОТЫ */
+/* SHOTS */
 .shots{display:grid;gap:12px;grid-template-columns:1fr}
 @media (min-width:700px){.shots.shots-2{grid-template-columns:1fr 1fr}}
 .shot{display:grid;gap:8px}
@@ -179,17 +175,17 @@ a{color:var(--accent)}
 .shot-frame:hover .shot-zoom,.shot-frame:focus-visible .shot-zoom{opacity:1}
 .shot figcaption{font-size:13px;color:var(--muted);text-align:center}
 
-/* АЛГОРИТМЫ / СЛОВАРЬ */
+/* STEPS / GLOSS */
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:st}
-.steps li{position:relative;padding-left:44px;counter-increment:st;color:var(--muted);font-size:14.5px;line-height:1.55}
-.steps li::before{content:counter(st);position:absolute;left:0;top:1px;width:28px;height:28px;border-radius:9px;
+.steps li{display:flex;align-items:center;gap:14px;counter-increment:st;color:var(--muted);font-size:14.5px;line-height:1.55}
+.steps li::before{content:counter(st);flex:none;width:28px;height:28px;border-radius:9px;
   background:color-mix(in srgb,var(--acc) 14%,transparent);color:var(--acc);font-weight:700;font-size:13px;display:grid;place-items:center}
 .gloss{margin:0;display:grid;gap:10px}
 .gloss div{padding:10px 14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
 .gloss dt{font-weight:700;font-size:14.5px}
 .gloss dd{margin:2px 0 0;color:var(--muted);font-size:14px;line-height:1.5}
 
-/* АККОРДЕОН ПРОМТА */
+/* PROMPT ACCORDION */
 .p-acc{border-top:1px dashed var(--line);padding-top:10px;margin-top:auto}
 .p-acc-btn{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;min-height:44px;
   font:inherit;font-size:14px;font-weight:700;color:var(--acc);background:none;border:0;cursor:pointer;padding:0 2px}
@@ -201,8 +197,8 @@ a{color:var(--accent)}
   font-family:inherit;font-size:15px;line-height:1.65;white-space:pre-wrap;color:var(--text)}
 .p-actions{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:6px}
 
-/* КОНСТРУКТОР */
-.cons{padding:clamp(20px,2.4vw,30px);margin:0 auto 20px;max-width:var(--col);display:grid;gap:16px;border-top:4px solid var(--acc)}
+/* CONS */
+.cons{padding:clamp(20px,2.4vw,30px);margin:0 0 20px;display:grid;gap:16px;border-top:4px solid var(--acc)}
 .cons-title{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700}
 .cons-title .ci2{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
   background:color-mix(in srgb,var(--acc) 14%,transparent);color:var(--acc)}
@@ -242,7 +238,7 @@ a{color:var(--accent)}
   .f-copy .f-sep{display:none}
 }
 
-/* ЛАЙТБОКС · размеры vh/vw компенсированы под zoom */
+/* LIGHTBOX */
 .lb{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
   padding:16px;overscroll-behavior:contain}
 .lb[hidden]{display:none}
@@ -265,6 +261,7 @@ a{color:var(--accent)}
   .lb-frame img{max-height:calc(62vh/var(--zoom))}
 }
 
+/* TOAST */
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);z-index:300;
   padding:12px 22px;border-radius:980px;background:var(--charcoal);color:#fff;border:1px solid rgba(255,255,255,.18);
   font-size:15px;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;max-width:calc(100vw/var(--zoom) - 32px);text-align:center}
@@ -285,9 +282,7 @@ const BACK_URL="https://mmmaslikov.github.io/point-ai";
 const QWEN_URL="https://chat.qwen.ai/";
 const IMG="images/";
 
-/* ====== ЛИЦО СФЕРЫ: меняйте только этот объект под своё МО ======
-   color/colorDark задают идентичность сферы в каталоге; шапка и hero
-   используют общие токены главной (--hero-acc), чтобы масштаб и тон совпадали. */
+/* ===== ЛИЦО СФЕРЫ (MO): единственный объект, который меняется под своё МО ===== */
 const MO={
   id:"math",
   title:"Математика, информатика, физика и труд",
@@ -300,14 +295,13 @@ const MO={
   chips:"Сайты, курсы, тренажёры, промты"
 };
 
-/* Один цвет на вкладку: все карточки внутри наследуют его */
+/* ===== Палитра вкладок (PAL) и сами вкладки (TABS): c = ключ PAL ===== */
 const PAL={
   green:{l:"#248a3d",d:"#30d158"}, purple:{l:"#8944ab",d:"#bf5af2"},
   blue:{l:"#0071e3",d:"#2997ff"},  orange:{l:"#c93400",d:"#ff9f0a"},
   pink:{l:"#d30f45",d:"#ff375f"},  teal:{l:"#0071a4",d:"#64d2ff"}
 };
 const accVars=k=>{const p=PAL[k]||PAL.blue;return `--acc-l:${p.l};--acc-d:${p.d}`;};
-
 const TABS=[
   {id:"start",emo:"🚦",label:"С чего начать",c:"green"},
   {id:"prompts",emo:"🎯",label:"Промты и сервисы",c:"purple"},
@@ -317,6 +311,7 @@ const TABS=[
   {id:"ege",emo:"🏆",label:"ЕГЭ и ОГЭ",c:"teal"}
 ];
 
+/* ===== Конструктор промтов (CONS): списки под свой предмет ===== */
 const CONS={
   subjects:["Математика","Информатика","Физика","Труд"],
   levels:["базовый","продвинутый","ОВЗ","олимпиадный"],
@@ -332,6 +327,7 @@ const OUTPUT_REQ={
   "план урока":"- распиши этапы с таймингом, деятельность учителя и учеников, формы контроля и дифференцированное домашнее задание на трёх уровнях;\n"
 };
 
+/* ===== Наполнение вкладок (CONTENT): intro + cards по id вкладки ===== */
 const CONTENT={
   start:{intro:"Эта вкладка — мягкий вход в тему для тех, кто пока не работал с нейросетями. Здесь простыми словами объясняется, что такое чат-бот, как с ним разговаривать и какие правила безопасности важно соблюдать. Начните отсюда, если хотите сначала понять логику, а уже потом переходить к промтам, сайтам и тренажёрам.",
     cards:[
@@ -508,6 +504,7 @@ const CONTENT={
     ]}
 };
 
+/* ===== Иконки (ICONS): ключи используются в MO.icon и card.icon ===== */
 const ICONS={
   dev:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>',
   code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>',
@@ -542,6 +539,7 @@ const ICONS={
   moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 14.2A8.6 8.6 0 0 1 9.8 3.4a8.6 8.6 0 1 0 10.8 10.8z"/></svg>'
 };
 
+/* ===== Состояние и утилиты ===== */
 const state={tab:TABS[0].id,theme:"auto",lb:null,lbReturn:null};
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -564,6 +562,7 @@ function bindShots(root){
   });
 }
 
+/* ===== Рендер ===== */
 function shotsBlock(shots){
   if(!shots||!shots.length)return "";
   const list=shots.map(s=>s.file).join("|");
@@ -630,16 +629,19 @@ function renderApp(){
     <span class="nav-title">${esc(MO.full||MO.title)}</span>
     <button class="icon-btn" id="theme-btn" type="button" aria-label="Переключить тему"></button>
   </div></header>
-  <section class="hero"><div class="hero-ico">${ICONS[MO.icon]||ICONS.spark}</div><div class="wrap">
-    <span class="kicker">Страница объединения · Точка ИИ</span>
-    <div class="hero-name">
-      <h1>${esc(MO.title)}</h1>
-      <p class="hero-sub"><span>${esc(MO.sub[0])}</span><span>${esc(MO.sub[1])}</span></p>
+  <section class="hero"><div class="wrap"><div class="hero-grid">
+    <div class="hero-left">
+      <span class="kicker">Страница объединения · Точка ИИ</span>
+      <div class="hero-name">
+        <h1>${esc(MO.title)}</h1>
+        <p class="hero-sub"><span>${esc(MO.sub[0])}</span><span>${esc(MO.sub[1])}</span></p>
+      </div>
+      <div class="hero-chips"><span class="chip">Куратор: ${esc(MO.head)}</span>
+        <span class="chip">${TABS.length} ${plural(TABS.length,"раздел","раздела","разделов")}</span>
+        <span class="chip">${esc(MO.chips||"Промты, алгоритмы, сервисы")}</span></div>
     </div>
-    <div class="hero-chips"><span class="chip">Куратор: ${esc(MO.head)}</span>
-      <span class="chip">${TABS.length} ${plural(TABS.length,"раздел","раздела","разделов")}</span>
-      <span class="chip">${esc(MO.chips||"Промты, алгоритмы, сервисы")}</span></div>
-  </div></section>
+    <div class="hero-ico" aria-hidden="true">${ICONS[MO.icon]||ICONS.spark}</div>
+  </div></div></section>
   <div class="tabs-bar"><div class="tabs" role="tablist" aria-label="Разделы страницы">
     ${TABS.map(t=>`<button class="tab-btn${t.id===state.tab?" on":""}" style="${accVars(t.c)}" type="button" role="tab" id="tab-${t.id}" aria-controls="panel-${t.id}" aria-selected="${t.id===state.tab}" data-tab="${t.id}"><span class="ti">${t.emo}</span>${esc(t.label)}</button>`).join("")}
   </div></div>
@@ -670,7 +672,6 @@ function renderApp(){
   updateCons();
   bindShots(document);
 }
-
 function consFields(){
   return {subject:$("#c-subject")?.value||CONS.subjects[0],topic:$("#c-topic")?.value.trim()||"",
     grade:$("#c-grade")?.value.trim()||"",level:$("#c-level")?.value||CONS.levels[0],
@@ -682,7 +683,6 @@ function buildCons(f){
   return `Ты — опытный методист по предмету «${f.subject}» и эксперт по разработке учебных материалов.\nРазработай «${f.format}» по теме «${f.topic||"[ТЕМА]"}» для ${f.grade||"[КЛАСС]"} класса, уровень: ${f.level}.\n\nИтоговый формат материала: ${f.output}.\n\nОбязательное содержание:\n${inc}\n\nТребования:\n- формулировки понятны ученику этого возраста, без двусмысленностей;\n- ответы и критерии согласованы с формулировками и проверяемы вторым учителем;\n${OUTPUT_REQ[f.output]||""}- в конце добавь короткую методическую заметку: как использовать материал на уроке и как адаптировать под другой уровень.`;
 }
 function updateCons(){const o=$("#cons-out");if(o)o.textContent=buildCons(consFields());}
-
 function switchTab(id,updateHash=true){
   if(!TABS.some(t=>t.id===id))return;
   state.tab=id;
@@ -696,7 +696,6 @@ function switchTab(id,updateHash=true){
     panel.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
   }
 }
-
 function openLb(list,idx,origin){
   state.lb={list,idx};state.lbReturn=origin||null;
   $("#lb").hidden=false;document.body.classList.add("lb-open");drawLb();
@@ -722,7 +721,6 @@ function drawLb(){
   $("#lb-prev").style.display=multi?"":"none";
   $("#lb-next").style.display=multi?"":"none";
 }
-
 function resolvedTheme(){return state.theme==="auto"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):state.theme;}
 function applyTheme(){
   const dark=resolvedTheme()==="dark";
@@ -733,6 +731,7 @@ function applyTheme(){
 function toggleTheme(){state.theme=resolvedTheme()==="dark"?"light":"dark";
   try{localStorage.setItem("mift_theme_v1",state.theme);}catch(e){}applyTheme();}
 
+/* ===== Обработчики ===== */
 function bindHandlers(){
   $("#theme-btn").addEventListener("click",toggleTheme);
   document.addEventListener("click",e=>{
@@ -781,6 +780,8 @@ function bindHandlers(){
     }
   });
 }
+
+/* ===== Инициализация ===== */
 function init(){
   try{const t=localStorage.getItem("mift_theme_v1");if(t==="light"||t==="dark")state.theme=t;}catch(e){}
   renderApp();bindHandlers();applyTheme();
